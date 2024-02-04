@@ -1,0 +1,78 @@
+{
+  "screens": {
+    "welcome": {
+      "buttons": {
+        "login": "Entrar",
+        "register": "Criar uma conta"
+      }
+    },
+    "login": {
+      "headerTitle": "Login",
+      "title": "Bem-vindo de volta",
+      "description": "Explorando novos sabores saudáveis",
+      "forgotPassword": "Esqueceu a senha? Clique aqui",
+      "inputs": {
+        "email": "E-mail",
+        "password": "Senha"
+      },
+      "button": "Entrar"
+    },
+    "register": {
+      "headerTitle": "Cadastro",
+      "title": "Seja bem-vindo",
+      "description": "Junte-se à comunidade vegana!",
+      "forgotPassword": "Clique aqui para entrar em sua conta",
+      "inputs": {
+        "name": "Nome",
+        "email": "E-mail",
+        "password": "Senha"
+      },
+      "button": "Cadastrar-se"
+    },
+    "home": {
+      "title": "Descubra o Sabor Vegano",
+      "description": "Explore pratos veganos irresistíveis \nelevando a culinária consciente.",
+      "search": "Pesquise por restaurantes, pratos..."
+    },
+    "restaurantDetails": {
+      "headerTitle": "Cardápio"
+    },
+    "foodDetails": {
+      "button": "Adicionar a sacola",
+      "orderBump": "Peça também"
+    }
+  },
+  "components": {
+    "bagBar": {
+      "priceLabel": "Subtotal",
+      "itemLabel": "item",
+      "itemsLabel": "itens",
+      "button": "Ver sacola"
+    },
+    "bag": {
+      "headerTitle": "Sacola de pedidos",
+      "subTotal": "Subtotal",
+      "freight": "Frete",
+      "total": "Total",
+      "itemLabel": "item",
+      "itemsLabel": "itens",
+      "button": "Finalizar"
+    },
+    "addressSelector": {
+      "headerTitle": "Endereço de entrega",
+      "title": "Usar localização atual"
+    }
+  },
+  "messages": {
+    "error": {
+      "bag": {
+        "checkout": "Não foi possível finalizar a compra. Tente novamente mais tarde."
+      }
+    },
+    "success": {
+      "bag": {
+        "checkout": "Pedido confirmado com sucesso!"
+      }
+    }
+  }
+}
