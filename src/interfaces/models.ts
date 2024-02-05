@@ -1,4 +1,37 @@
 declare module models {
+  type ResetPasswordFormData = {
+    pin: string;
+    password: string;
+  };
+
+  type AuthContextState = {
+    user: User;
+    loading: boolean;
+    logIn: (credentials: LoginFormData) => Promise<AuthState | void>;
+    signOut(): void;
+  };
+
+  type RefreshResponse = {
+    newRefreshToken: string;
+    accessToken: string;
+  };
+
+  type LogInResponse = {
+    user: User;
+  };
+
+  type User = {
+    id: string;
+    name: string;
+    email: string;
+  };
+
+  type AuthState = {
+    accessToken: string;
+    refreshToken: string;
+    user: User;
+  };
+
   type RegisterFormData = {
     name: string;
     email: string;
@@ -41,7 +74,7 @@ declare module models {
   };
 
   type BagProps = BottomSheetProps & {
-    items: Food[];
+    items: Dish[];
     subtotal: number;
     removeItem: (id: string) => void;
     removeAllItems: () => void;
@@ -53,15 +86,15 @@ declare module models {
   };
 
   type BagBarProps = {
-    items: Food[];
+    items: Dish[];
     subtotal: number;
     openModal: () => void;
   };
 
   type BagContextData = {
-    items: Food[];
+    items: Dish[];
     subtotal: number;
-    addItem: (food: Food) => void;
+    addItem: (dish: Dish) => void;
     removeItem: (id: string) => void;
     removeAllItems: () => void;
     openModal: () => void;
@@ -70,19 +103,20 @@ declare module models {
     showBar: () => void;
   };
 
-  type Food = {
-    bagFoodId: string;
+  type Dish = {
+    bagDishId: string;
     id: string;
     name: string;
     resume: string;
     description: string;
     imageUrl: string;
     price: number;
+    suggestedDishes: Dish[];
   };
 
-  type FoodCardProps = DefaultComponentProps & {
+  type DishCardProps = DefaultComponentProps & {
     variant?: 'vertical' | 'horizontal';
-    food: Food;
+    dish: Dish;
     isLastItem?: boolean;
     disabled?: boolean;
     onPress?: () => void;
@@ -97,7 +131,7 @@ declare module models {
     address: string;
     rate: number;
     liked: boolean;
-    foods: Food[];
+    dishes: Dish[];
   };
 
   type RestaurantCardProps = DefaultComponentProps & {

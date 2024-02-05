@@ -21,7 +21,9 @@ const RestaurantCard: React.FC<models.RestaurantCardProps> = ({
       style={containerStyle}
       isLastItem={isLastItem}
       onPress={() => {
-        navigateTo(navigation, 'RestaurantDetails');
+        navigateTo(navigation, 'RestaurantDetails', {
+          id: restaurant.id,
+        });
       }}
     >
       <S.Image

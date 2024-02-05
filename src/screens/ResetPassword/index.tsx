@@ -1,55 +1,56 @@
 import React, { useCallback, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { KeyboardAvoidingView, Platform } from 'react-native';
+
 import * as S from './styles';
 import { i18n } from '../../services/translator';
 import { useForm } from 'react-hook-form';
 import { getError } from '../../utils/getError';
-import { KeyboardAvoidingView, Platform } from 'react-native';
 import Logo from '../../components/atoms/Logo';
 import { useTheme } from 'styled-components';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import {
-  emailValidation,
-  passwordValidation,
-  nameValidation,
-} from '../../validators';
-import UsersApi from '../../repositories/users';
+import { pinValidation, passwordValidation } from '../../validators';
+import PasswordApi from '../../repositories/password';
 import { useToast } from '../../hooks/toast';
 import { AxiosError } from 'axios';
+import { useNavigation } from '@react-navigation/native';
+import { resetTo } from '../../services/navigation';
 
 const schema = z.object({
-  name: nameValidation,
-  email: emailValidation,
+  pin: pinValidation,
   password: passwordValidation,
 });
 
-const Register: React.FC = () => {
-  const [buttonLoading, setButtonLoading] = useState(false);
-  const { addToast } = useToast();
+const ResetPassword: React.FC = () => {
   const {
     colors: { gray1 },
   } = useTheme();
   const {
     control,
+    getValues,
     handleSubmit,
     watch,
-    getValues,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
   });
-  const { name, email, password } = watch();
+  const navigation = useNavigation();
+  const [buttonLoading, setButtonLoading] = useState(false);
+  const { addToast } = useToast();
+  const { password, pin } = watch();
 
-  const handleRegister = useCallback(async () => {
+  const handleResetPassword = useCallback(async () => {
     setButtonLoading(true);
-    const data = getValues() as models.RegisterFormData;
+    const data = getValues() as models.ResetPasswordFormData;
     try {
-      await UsersApi.create(data);
+      await PasswordApi.reset(data);
       addToast({
         type: 'success',
-        message: 'register',
+        message: 'resetPassword',
       });
+
+      resetTo(navigation, [{ name: 'Welcome' }, { name: 'Login' }]);
     } catch (error) {
       if (error instanceof AxiosError) {
         return addToast({
@@ -82,48 +83,42 @@ const Register: React.FC = () => {
       >
         <S.Header
           color={gray1}
-          title={i18n.t('screens.register.headerTitle')}
+          title={i18n.t('screens.resetPassword.headerTitle')}
         />
         <S.LogoContainer>
           <Logo variant="all-white" width={52} height={12} />
         </S.LogoContainer>
-        <S.Title>{i18n.t('screens.register.title')}</S.Title>
-        <S.Description>{i18n.t('screens.register.description')}</S.Description>
+        <S.Title>{i18n.t('screens.resetPassword.title')}</S.Title>
+        <S.Description>
+          {i18n.t('screens.resetPassword.description')}
+        </S.Description>
         <S.Input
-          placeholder={i18n.t('screens.register.inputs.name')}
+          placeholder={i18n.t('screens.resetPassword.inputs.pin')}
           control={control}
-          name="name"
-          textContentType="name"
-          error={getError(errors, 'name')}
+          name="pin"
+          keyboardType="number-pad"
+          error={getError(errors, 'pin')}
           containerStyle={{ marginBottom: 48 }}
+          maxLength={6}
         />
         <S.Input
-          placeholder={i18n.t('screens.register.inputs.email')}
-          control={control}
-          name="email"
-          error={getError(errors, 'email')}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          containerStyle={{ marginBottom: 48 }}
-        />
-        <S.Input
-          placeholder={i18n.t('screens.register.inputs.password')}
+          placeholder={i18n.t('screens.resetPassword.inputs.password')}
           control={control}
           name="password"
-          textContentType="password"
           error={getError(errors, 'password')}
           secureTextEntry
         />
+
         <S.Footer>
           <S.Button
+            disabled={!password || !pin}
             loading={buttonLoading}
-            disabled={!name || !email || !password}
             onPress={() => {
-              if (!name || !email || !password) return;
-              handleSubmit(handleRegister)();
+              if (!password || !pin) return;
+              handleSubmit(handleResetPassword)();
             }}
           >
-            {i18n.t('screens.register.button')}
+            {i18n.t('screens.resetPassword.button')}
           </S.Button>
         </S.Footer>
       </S.Container>
@@ -131,4 +126,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default ResetPassword;

@@ -8,6 +8,12 @@ export const Container = styled(RectButton)<models.ButtonProps>`
     backgroundColor || theme.colors.primary};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 
+  ${props =>
+    props.loading &&
+    css`
+      opacity: 1;
+    `}
+
   ${({ variant }) =>
     variant === 'outlined' &&
     css`

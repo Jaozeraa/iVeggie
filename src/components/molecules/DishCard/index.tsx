@@ -4,9 +4,9 @@ import { navigateTo } from '../../../services/navigation';
 import { useNavigation } from '@react-navigation/native';
 import { formatCurrency } from '../../../utils/formatCurrency';
 
-const FoodCard: React.FC<models.FoodCardProps> = ({
+const DishCard: React.FC<models.DishCardProps> = ({
   variant = 'vertical',
-  food,
+  dish,
   isLastItem,
   containerStyle,
   disabled,
@@ -23,22 +23,22 @@ const FoodCard: React.FC<models.FoodCardProps> = ({
           isLastItem={isLastItem}
           onPress={() => {
             onPress && onPress();
-            navigateTo(navigation, 'FoodDetails', { food });
+            navigateTo(navigation, 'DishDetails', { id: dish.id });
           }}
         >
           <S.Image
             source={{
-              uri: food.imageUrl,
+              uri: dish.imageUrl,
             }}
           />
           <S.InformationContainer>
             <S.Title numberOfLines={1} lineBreakMode="tail">
-              {food.name}
+              {dish.name}
             </S.Title>
             <S.Description numberOfLines={2} lineBreakMode="tail">
-              {food.resume}
+              {dish.resume}
             </S.Description>
-            <S.Price>{formatCurrency(food.price)}</S.Price>
+            <S.Price>{formatCurrency(dish.price)}</S.Price>
           </S.InformationContainer>
         </S.VerticalContainer>
       )}
@@ -48,22 +48,22 @@ const FoodCard: React.FC<models.FoodCardProps> = ({
           style={containerStyle}
           onPress={() => {
             onPress && onPress();
-            navigateTo(navigation, 'FoodDetails', { food });
+            navigateTo(navigation, 'DishDetails', { id: dish.id });
           }}
         >
           <S.Image
             source={{
-              uri: food.imageUrl,
+              uri: dish.imageUrl,
             }}
           />
           <S.InformationContainer>
             <S.Title numberOfLines={1} lineBreakMode="tail">
-              {food.name}
+              {dish.name}
             </S.Title>
             <S.Description numberOfLines={2} lineBreakMode="tail">
-              {food.resume}
+              {dish.resume}
             </S.Description>
-            <S.Price>{formatCurrency(food.price)}</S.Price>
+            <S.Price>{formatCurrency(dish.price)}</S.Price>
           </S.InformationContainer>
         </S.HorizontalContainer>
       )}
@@ -71,4 +71,4 @@ const FoodCard: React.FC<models.FoodCardProps> = ({
   );
 };
 
-export default FoodCard;
+export default DishCard;

@@ -1,6 +1,8 @@
 import React from 'react';
 
 import * as S from './styles';
+import { ActivityIndicator } from 'react-native';
+import { useTheme } from 'styled-components';
 
 const Button: React.FC<models.ButtonProps> = ({
   backgroundColor,
@@ -12,11 +14,13 @@ const Button: React.FC<models.ButtonProps> = ({
   containerStyle,
   children,
 }) => {
+  const { gray5 } = useTheme().colors;
   return (
     <S.Container
       variant={variant}
       backgroundColor={backgroundColor}
       disabled={disabled || loading}
+      loading={loading}
       onPress={onPress}
       style={{ ...containerStyle, borderRadius: 8 }}
     >
@@ -26,7 +30,11 @@ const Button: React.FC<models.ButtonProps> = ({
         disabled={disabled}
         style={{ borderRadius: 8 }}
       >
-        <S.Text textColor={textColor}>{children}</S.Text>
+        {loading ? (
+          <ActivityIndicator color={textColor} size="small" />
+        ) : (
+          <S.Text textColor={textColor || gray5}>{children}</S.Text>
+        )}
       </S.Content>
     </S.Container>
   );

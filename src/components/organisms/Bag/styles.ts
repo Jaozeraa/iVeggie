@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import BottomSheet from '../../atoms/BottomSheet';
 import Feather from '@expo/vector-icons/Feather';
-import FoodCard from '../../molecules/FoodCard';
+import DishCard from '../../molecules/DishCard';
 import Header from '../../molecules/Header';
 
 export const Container = styled.View`
@@ -30,7 +30,7 @@ export const ItemsList = styled.FlatList`
   padding-horizontal: 24px;
 `;
 
-export const FoodCardContainer = styled.View<models.RestaurantCardContainerProps>`
+export const DishCardContainer = styled.View<models.RestaurantCardContainerProps>`
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
@@ -48,7 +48,7 @@ export const FoodCardContainer = styled.View<models.RestaurantCardContainerProps
     `}
 `;
 
-export const FoodCardContent = styled.View`
+export const DishCardContent = styled.View`
   max-width: 296px;
   flex-direction: row;
 `;
@@ -146,4 +146,4 @@ export const CheckoutButtonText = styled.Text`
   color: ${props => props.theme.colors.gray5};
 `;
 
-export { BottomSheet, FoodCard, Header };
+export { BottomSheet, DishCard, Header };

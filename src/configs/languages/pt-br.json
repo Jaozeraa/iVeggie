@@ -17,6 +17,25 @@
       },
       "button": "Entrar"
     },
+    "forgotPassword": {
+      "headerTitle": "Recuperar senha",
+      "title": "Esqueceu a senha?",
+      "description": "Digite seu e-mail para redefinir sua senha",
+      "inputs": {
+        "email": "E-mail"
+      },
+      "button": "Enviar"
+    },
+    "resetPassword": {
+      "headerTitle": "Redefinir senha",
+      "title": "Escolha sua nova senha",
+      "description": "Cheque seu e-mail para pegar o código de verificação",
+      "inputs": {
+        "pin": "Código de verificação",
+        "password": "Nova senha"
+      },
+      "button": "Redefinir"
+    },
     "register": {
       "headerTitle": "Cadastro",
       "title": "Seja bem-vindo",
@@ -37,12 +56,15 @@
     "restaurantDetails": {
       "headerTitle": "Cardápio"
     },
-    "foodDetails": {
+    "dishDetails": {
       "button": "Adicionar a sacola",
       "orderBump": "Peça também"
     }
   },
   "components": {
+    "header": {
+      "signOut": "Sair da plataforma"
+    },
     "bagBar": {
       "priceLabel": "Subtotal",
       "itemLabel": "item",
@@ -65,14 +87,35 @@
   },
   "messages": {
     "error": {
-      "bag": {
-        "checkout": "Não foi possível finalizar a compra. Tente novamente mais tarde."
-      }
+      "generic": "Algo deu errado. Tente novamente mais tarde.",
+      "restaurantNotFound": "Restaurante não encontrado",
+      "restaurantAlreadyExists": "Restaurante já cadastrado",
+      "dishNotFound": "Prato não encontrado",
+      "invalidCredentials": "Credenciais inválidas",
+      "emailAlreadyExists": "E-mail já cadastrado",
+      "userNotFound": "Usuário não encontrado",
+      "expiredToken": "Código expirado!",
+      "invalidToken": "Código inválido!"
     },
     "success": {
-      "bag": {
-        "checkout": "Pedido confirmado com sucesso!"
-      }
+      "checkout": "Pedido confirmado com sucesso!",
+      "register": "Cadastro realizado com sucesso!",
+      "login": "Login realizado com sucesso!",
+      "forgotPassword": "E-mail enviado com sucesso!",
+      "resetPassword": "Senha redefinida com sucesso!"
+    }
+  },
+  "validations": {
+    "required": "Campo obrigatório",
+    "name": {
+      "invalid": "Nome inválido"
+    },
+    "email": {
+      "invalid": "E-mail inválido"
+    },
+    "password": {
+      "invalid": "Senha inválida",
+      "min": "A senha deve ter no mínimo 6 caracteres"
     }
   }
 }

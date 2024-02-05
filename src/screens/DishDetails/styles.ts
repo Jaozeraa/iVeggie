@@ -1,8 +1,9 @@
 import styled from 'styled-components/native';
 import Header from '../../components/molecules/Header';
 import Button from '../../components/atoms/Button';
-import FoodCard from '../../components/molecules/FoodCard';
+import DishCard from '../../components/molecules/DishCard';
 import { Platform } from 'react-native';
+import Logo from '../../components/atoms/Logo';
 
 export const LoadingContainer = styled.View`
   flex: 1;
@@ -18,7 +19,7 @@ export const Container = styled.View`
   position: relative;
 `;
 
-export const FoodImage = styled.ImageBackground`
+export const DishImage = styled.ImageBackground`
   width: 100%;
   height: 65%;
   position: absolute;
@@ -60,7 +61,7 @@ export const BottomSheetContainer = styled.View`
   padding: 24px 0 40px;
 `;
 
-export const FoodDataContainer = styled.View`
+export const DishDataContainer = styled.View`
   padding-horizontal: 24px;
 `;
 
@@ -87,7 +88,7 @@ export const OrderBumpTitle = styled.Text`
 
 export const OrderBumpList = styled.FlatList``;
 
-export const FoodCardContainer = styled.View<models.RestaurantCardContainerProps>`
+export const DishCardContainer = styled.View<models.RestaurantCardContainerProps>`
   width: 308px;
   height: 96px;
   padding: 8px;
@@ -104,4 +105,4 @@ export const Footer = styled.View`
   padding-horizontal: 24px;
 `;
 
-export { Header, Button, FoodCard };
+export { Header, Button, DishCard, Logo };

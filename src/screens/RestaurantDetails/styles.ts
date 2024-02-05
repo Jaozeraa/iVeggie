@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import Header from '../../components/molecules/Header';
 import Feather from '@expo/vector-icons/Feather';
 import { RectButton } from 'react-native-gesture-handler';
-import FoodCard from '../../components/molecules/FoodCard';
+import DishCard from '../../components/molecules/DishCard';
 import Logo from '../../components/atoms/Logo';
 
 export const LoadingContainer = styled.View`
@@ -140,6 +140,6 @@ export const RestaurantDataContainer = styled.View`
   border-bottom-width: 1px;
 `;
 
-export const FoodList = styled(FlatList)``;
+export const DishList = styled(FlatList)``;
 
-export { Header, FoodCard, Logo };
+export { Header, DishCard, Logo };

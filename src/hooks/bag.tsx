@@ -19,9 +19,9 @@ export const BagContextProvider: React.FC<models.DefaultComponentProps> = ({
 }) => {
   const [isBagVisible, setIsBagVisible] = useState(false);
   const [isBagBarVisible, setIsBagBarVisible] = useState(true);
-  const [items, setItems] = useState<models.Food[]>([]);
+  const [items, setItems] = useState<models.Dish[]>([]);
   const subtotal = useMemo(
-    () => items.reduce((acc, food) => acc + food.price, 0),
+    () => items.reduce((acc, dish) => acc + Number(dish.price), 0),
     [items],
   );
 
@@ -31,18 +31,18 @@ export const BagContextProvider: React.FC<models.DefaultComponentProps> = ({
     }
   }, [items]);
 
-  const addItem = useCallback((food: models.Food) => {
-    const bagFoodId = Crypto.randomUUID();
-    const bagFood = {
-      ...food,
-      bagFoodId,
+  const addItem = useCallback((dish: models.Dish) => {
+    const bagDishId = Crypto.randomUUID();
+    const bagDish = {
+      ...dish,
+      bagDishId,
     };
 
-    setItems(state => [...state, bagFood]);
+    setItems(state => [...state, bagDish]);
   }, []);
 
-  const removeItem = useCallback((bagFoodId: string): void => {
-    setItems(state => state.filter(item => item.bagFoodId !== bagFoodId));
+  const removeItem = useCallback((bagDishId: string): void => {
+    setItems(state => state.filter(item => item.bagDishId !== bagDishId));
   }, []);
 
   const removeAllItems = useCallback(() => {

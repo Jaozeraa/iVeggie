@@ -3,7 +3,6 @@ import RootProvider from './src/hooks';
 import * as SplashScreen from 'expo-splash-screen';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFonts } from 'expo-font';
-import { useCallback } from 'react';
 import Routes from './src/routes';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -16,19 +15,13 @@ const App: React.FC = () => {
     'TolyerNo1-Medium': require('./assets/fonts/TolyerNo1-Medium.ttf'),
   });
 
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded || fontError) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
-
   if (!fontsLoaded && !fontError) {
     return null;
   }
 
   return (
     <NavigationContainer>
-      <GestureHandlerRootView onLayout={onLayoutRootView} style={{ flex: 1 }}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
         <RootProvider>
           <Routes />
         </RootProvider>

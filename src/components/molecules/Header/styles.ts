@@ -10,19 +10,19 @@ export const Container = styled.View`
   justify-content: space-between;
 `;
 
-export const AddressContainer = styled.TouchableOpacity`
+export const LogoutContainer = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
 `;
 
-export const AddressText = styled.Text<models.HeaderTitleProps>`
+export const LogoutText = styled.Text<models.HeaderTitleProps>`
   font-size: 14px;
   color: ${props => props.color};
   font-family: ${props => props.theme.fonts.interSemiBold};
   margin-right: 8px;
 `;
 
-export const AddressIcon = styled(Feather)``;
+export const LogoutIcon = styled(Feather)``;
 
 export const BackButton = styled.TouchableOpacity`
   align-items: center;

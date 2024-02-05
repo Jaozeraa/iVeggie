@@ -4,7 +4,7 @@ import { useTheme } from 'styled-components';
 
 import Home from '../screens/Home';
 import RestaurantDetails from '../screens/RestaurantDetails';
-import FoodDetails from '../screens/FoodDetails';
+import DishDetails from '../screens/DishDetails';
 
 const Auth = createNativeStackNavigator();
 
@@ -19,12 +19,13 @@ const AuthRoutes: React.FC = () => {
         headerShown: false,
         contentStyle: { backgroundColor: primary },
       }}
+      initialRouteName="Home"
     >
       <Auth.Screen name="Home" component={Home} />
       <Auth.Screen name="RestaurantDetails" component={RestaurantDetails} />
       <Auth.Screen
-        name="FoodDetails"
-        component={FoodDetails}
+        name="DishDetails"
+        component={DishDetails}
         options={{
           presentation: 'modal',
         }}

@@ -12,4 +12,14 @@ const navigateBack = (navigation: any) => {
   navigation.goBack();
 };
 
-export { navigateTo, navigateBack };
+const resetTo = (
+  navigation: NavigationProp<ReactNavigation.RootParamList>,
+  routes: any[],
+) => {
+  navigation.reset({
+    index: 0,
+    routes,
+  });
+};
+
+export { navigateTo, navigateBack, resetTo };

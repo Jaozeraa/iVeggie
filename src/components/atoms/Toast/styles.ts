@@ -13,7 +13,7 @@ export const Container = styled(Animated.View)`
     `}
 `;
 
-export const Content = styled.TouchableOpacity`
+export const Content = styled.View`
   flex: 1;
   flex-direction: row;
   align-items: center;

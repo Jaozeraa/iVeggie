@@ -19,17 +19,17 @@ const Bag: React.FC<models.BagProps> = ({
     colors: { gray1, red },
   } = useTheme();
   const freight = 10;
-  const totalPrice = freight + subtotal;
+  const totalPrice = freight + Number(subtotal);
 
-  const handleDeleteItem = useCallback((food: models.Food) => {
-    removeItem(food.bagFoodId);
+  const handleDeleteItem = useCallback((dish: models.Dish) => {
+    removeItem(dish.bagDishId);
   }, []);
 
   const handleCheckout = useCallback(() => {
     removeAllItems();
     toast.addToast({
       type: 'success',
-      message: 'bag.checkout',
+      message: 'checkout',
     });
   }, []);
 
@@ -48,20 +48,20 @@ const Bag: React.FC<models.BagProps> = ({
           data={items}
           keyExtractor={(_item, index) => String(index)}
           renderItem={({ item, index }) => (
-            <S.FoodCardContainer isLastItem={index === items.length - 1}>
-              <S.FoodCardContent>
-                <S.FoodCard
-                  food={item as models.Food}
+            <S.DishCardContainer isLastItem={index === items.length - 1}>
+              <S.DishCardContent>
+                <S.DishCard
+                  dish={item as models.Dish}
                   variant="horizontal"
                   disabled
                 />
-              </S.FoodCardContent>
+              </S.DishCardContent>
               <S.DeleteButton
-                onPress={() => handleDeleteItem(item as models.Food)}
+                onPress={() => handleDeleteItem(item as models.Dish)}
               >
                 <S.DeleteIcon name="trash-2" size={20} color={red} />
               </S.DeleteButton>
-            </S.FoodCardContainer>
+            </S.DishCardContainer>
           )}
         />
         <S.PriceTable>

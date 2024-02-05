@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import * as S from './styles';
 import { useTheme } from 'styled-components';
 import { navigateBack } from '../../../services/navigation';
 import { useNavigation } from '@react-navigation/native';
+import { i18n } from '../../../services/translator';
+import { useAuth } from '../../../hooks/auth';
 
 const Header: React.FC<models.HeaderProps> = ({
   variant = 'page',
@@ -14,6 +16,7 @@ const Header: React.FC<models.HeaderProps> = ({
   const {
     colors: { gray5 },
   } = useTheme();
+  const { signOut } = useAuth();
   const navigation = useNavigation();
 
   return (
@@ -52,18 +55,17 @@ const Header: React.FC<models.HeaderProps> = ({
       {variant === 'home' && (
         <S.Container>
           <S.Logo width={64} height={16} />
-          <S.AddressContainer
+          <S.LogoutContainer
             onPress={() => {
+              signOut();
               onPress && onPress();
             }}
           >
-            <S.AddressText color={color || gray5}>{title}</S.AddressText>
-            <S.AddressIcon
-              size={16}
-              name="chevron-down"
-              color={color || gray5}
-            />
-          </S.AddressContainer>
+            <S.LogoutText color={color || gray5}>
+              {i18n.t('components.header.signOut')}
+            </S.LogoutText>
+            <S.LogoutIcon size={16} name="log-out" color={color || gray5} />
+          </S.LogoutContainer>
         </S.Container>
       )}
     </>

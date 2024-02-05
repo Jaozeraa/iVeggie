@@ -1,4 +1,3 @@
-import { CommonActions, useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { Animated } from 'react-native';
 import { useTheme } from 'styled-components';
@@ -15,7 +14,6 @@ const Toast: React.FC<models.ToastProps> = ({ message, removeToast }) => {
   const {
     colors: { gray5 },
   } = useTheme();
-  const navigation = useNavigation();
 
   Animated.spring(translateY, {
     toValue: 0,
@@ -49,18 +47,7 @@ const Toast: React.FC<models.ToastProps> = ({ message, removeToast }) => {
         ],
       }}
     >
-      <S.Content
-        onPress={() => {
-          Animated.spring(translateY, {
-            toValue: -200,
-            useNativeDriver: true,
-          }).start();
-          setTimeout(() => {
-            removeToast();
-          }, 500);
-          navigation.dispatch(CommonActions.navigate('Notifications'));
-        }}
-      >
+      <S.Content>
         <S.TypeMessageView type={message.type}>
           <S.TypeMessageIcon
             name={icons[message.type || 'error'] as any}
