@@ -140,6 +140,7 @@ declare module models {
     isLastItem?: boolean;
     disabled?: boolean;
     onPress?: () => void;
+    loading?: boolean;
   };
 
   type Restaurant = {
@@ -160,6 +161,7 @@ declare module models {
     restaurant: Restaurant;
     isLastItem?: boolean;
     disabled?: boolean;
+    loading?: boolean;
   };
 
   type RestaurantCardContainerProps = {

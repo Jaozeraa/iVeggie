@@ -10,6 +10,8 @@ import { navigateBack } from '../../services/navigation';
 import { Platform } from 'react-native';
 import { useTheme } from 'styled-components';
 import DishesApi from '../../repositories/dishes';
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const DishDetails: React.FC = () => {
   const {
@@ -20,15 +22,19 @@ const DishDetails: React.FC = () => {
   const bag = useBag();
   const { id } = route.params as { id: string };
   const [dish, setDish] = useState<models.Dish | null>(null);
+  const [loading, setLoading] = useState(true);
   const [buttonLoading, setButtonLoading] = useState(false);
   const [suggestedDishes, setSuggestedDishes] = useState<models.Dish[]>([]);
+  const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       const data = await DishesApi.getDishDetails(id);
 
       setDish(data.dish);
       setSuggestedDishes(data.suggestedDishes);
+      setLoading(false);
     })();
   }, [id]);
 
@@ -40,21 +46,23 @@ const DishDetails: React.FC = () => {
     setButtonLoading(false);
   }, []);
 
-  if (!dish) {
-    return (
-      <S.LoadingContainer>
-        <S.Logo variant="colored" height={32} width={140} />
-        <S.Loading size="large" color={gray5} style={{ marginTop: 24 }} />
-      </S.LoadingContainer>
-    );
-  }
-
   return (
     <S.Container>
       <StatusBar style="light" animated />
+      <ShimmerPlaceholder
+        visible={!loading}
+        shimmerStyle={{
+          width: '100%',
+          height: '65%',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+        }}
+      />
       <S.DishImage
         source={{
-          uri: dish.imageUrl,
+          uri: dish?.imageUrl,
         }}
         imageStyle={{ opacity: 0.8 }}
       />
@@ -71,20 +79,45 @@ const DishDetails: React.FC = () => {
         <S.Content>
           <S.BottomSheetContainer>
             <S.DishDataContainer>
-              <S.Title numberOfLines={1} lineBreakMode="tail">
-                {dish.name}
-              </S.Title>
-              <S.Description numberOfLines={8} lineBreakMode="tail">
-                {dish.description}
-              </S.Description>
-              {suggestedDishes.length > 0 && (
+              <ShimmerPlaceholder
+                visible={!loading}
+                shimmerStyle={{
+                  marginRight: 8,
+                  marginBottom: 8,
+                  height: 24,
+                  width: 300,
+                }}
+              >
+                <S.Title numberOfLines={1} lineBreakMode="tail">
+                  {dish?.name}
+                </S.Title>
+              </ShimmerPlaceholder>
+              <ShimmerPlaceholder
+                visible={!loading}
+                shimmerStyle={{
+                  height: 150,
+                  width: '100%',
+                }}
+              >
+                <S.Description numberOfLines={8} lineBreakMode="tail">
+                  {dish?.description}
+                </S.Description>
+              </ShimmerPlaceholder>
+              <ShimmerPlaceholder
+                visible={!loading}
+                shimmerStyle={{
+                  marginTop: 16,
+                  marginBottom: 8,
+                  width: 100,
+                }}
+              >
                 <S.OrderBumpTitle>
                   {i18n.t('screens.dishDetails.orderBump')}
                 </S.OrderBumpTitle>
-              )}
+              </ShimmerPlaceholder>
             </S.DishDataContainer>
             <S.OrderBumpList
-              data={suggestedDishes}
+              data={loading ? Array.from({ length: 2 }) : suggestedDishes}
               keyExtractor={(_item, index) => String(index)}
               horizontal
               contentContainerStyle={{ paddingHorizontal: 24 }}
@@ -97,16 +130,17 @@ const DishDetails: React.FC = () => {
                     variant="horizontal"
                     dish={item as models.Dish}
                     isLastItem={index === suggestedDishes.length - 1}
+                    loading={loading}
                   />
                 </S.DishCardContainer>
               )}
             />
             <S.Footer>
               <S.Button
-                loading={buttonLoading}
-                onPress={() => handleAddToBag(dish)}
+                loading={loading || buttonLoading}
+                onPress={() => handleAddToBag(dish as models.Dish)}
               >
-                {formatCurrency(dish.price)} -{' '}
+                {formatCurrency(Number(dish?.price))} -{' '}
                 {i18n.t('screens.dishDetails.button')}
               </S.Button>
             </S.Footer>

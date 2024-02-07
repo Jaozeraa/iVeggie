@@ -32,6 +32,7 @@ const Map: React.FC<models.MapProps> = ({ userLocation, restaurant }) => {
         latitudeDelta,
         longitudeDelta,
       }}
+      showsCompass={false}
     >
       <Marker coordinate={userLocation} image={MapPin} />
       <Marker

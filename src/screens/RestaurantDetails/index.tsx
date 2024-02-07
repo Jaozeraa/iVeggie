@@ -10,6 +10,8 @@ import { useBag } from '../../hooks/bag';
 import { Platform, RefreshControl } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import RestaurantsApi from '../../repositories/restaurants';
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const RestaurantDetails: React.FC = () => {
   const bag = useBag();
@@ -18,21 +20,24 @@ const RestaurantDetails: React.FC = () => {
   const {
     colors: { gray2, yellow, gray5, primary },
   } = useTheme();
-  const [loading, setLoading] = useState(true);
+  const [restaurantLoading, setRestaurantLoading] = useState(true);
+  const [dishesLoading, setDishesLoading] = useState(false);
   const [restaurant, setRestaurant] = useState<models.Restaurant | undefined>(
     undefined,
   );
 
   const loadRestaurant = useCallback(async () => {
-    setLoading(true);
+    setDishesLoading(true);
     const loadedRestaurant = await RestaurantsApi.getRestaurantDetails(id);
     setRestaurant(loadedRestaurant);
-    setLoading(false);
+    setDishesLoading(false);
   }, [id]);
 
   useEffect(() => {
     (async () => {
-      await loadRestaurant();
+      const loadedRestaurant = await RestaurantsApi.getRestaurantDetails(id);
+      setRestaurant(loadedRestaurant);
+      setRestaurantLoading(false);
     })();
   }, []);
 
@@ -42,20 +47,23 @@ const RestaurantDetails: React.FC = () => {
     }
   }, [restaurant]);
 
-  if (!restaurant) {
-    return (
-      <S.LoadingContainer>
-        <S.Logo variant="colored" height={32} width={140} />
-        <S.Loading size="large" color={gray5} style={{ marginTop: 24 }} />
-      </S.LoadingContainer>
-    );
-  }
+  const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
   return (
     <S.Container>
+      <ShimmerPlaceholder
+        shimmerStyle={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          height: '50%',
+          width: '100%',
+        }}
+        visible={!restaurantLoading}
+      />
       <S.Wallpaper
         source={{
-          uri: restaurant.wallpaperUrl,
+          uri: restaurant?.wallpaperUrl,
         }}
         imageStyle={{ opacity: 0.6 }}
       />
@@ -71,54 +79,80 @@ const RestaurantDetails: React.FC = () => {
         </S.HeaderContainer>
         <S.Content>
           <S.ActionsContainer>
+            {restaurantLoading && (
+              <ShimmerPlaceholder
+                shimmerStyle={{
+                  height: 96,
+                  width: 96,
+                  borderRadius: 48,
+                }}
+              />
+            )}
             <S.Image
               source={{
-                uri: restaurant.imageUrl,
+                uri: restaurant?.imageUrl,
               }}
             />
-            <S.ButtonsContainer>
-              <S.ActionButton style={{ borderRadius: 8 }}>
-                <S.ActionIcon name="share-2" size={18} color={gray2} />
-              </S.ActionButton>
-              <S.ActionButton
-                style={{ borderRadius: 8 }}
-                onPress={callRestaurant}
-              >
-                <S.ActionIcon name="phone" size={18} color={gray2} />
-              </S.ActionButton>
-            </S.ButtonsContainer>
+            {!restaurantLoading && (
+              <S.ButtonsContainer>
+                <S.ActionButton style={{ borderRadius: 8 }}>
+                  <S.ActionIcon name="share-2" size={18} color={gray2} />
+                </S.ActionButton>
+                <S.ActionButton
+                  style={{ borderRadius: 8 }}
+                  onPress={callRestaurant}
+                >
+                  <S.ActionIcon name="phone" size={18} color={gray2} />
+                </S.ActionButton>
+              </S.ButtonsContainer>
+            )}
           </S.ActionsContainer>
           <S.BottomSheetContainer>
             <S.RestaurantDataContainer>
-              <S.TitleContainer>
-                <S.Title>{restaurant.name}</S.Title>
-                <S.RatingContainer>
-                  <S.Rating>{formatRate(restaurant.rate)}</S.Rating>
-                  <S.RatingIcon name="star" size={16} color={yellow} />
-                </S.RatingContainer>
-              </S.TitleContainer>
-              <S.Address>{restaurant.address}</S.Address>
+              <ShimmerPlaceholder
+                shimmerStyle={{ marginTop: 8, height: 24 }}
+                visible={!restaurantLoading}
+              >
+                <S.TitleContainer>
+                  <S.Title>{restaurant?.name}</S.Title>
+                  <S.RatingContainer>
+                    <S.Rating>{formatRate(Number(restaurant?.rate))}</S.Rating>
+                    <S.RatingIcon name="star" size={16} color={yellow} />
+                  </S.RatingContainer>
+                </S.TitleContainer>
+              </ShimmerPlaceholder>
+              <ShimmerPlaceholder
+                shimmerStyle={{ marginTop: 8, width: 100 }}
+                visible={!restaurantLoading}
+              >
+                <S.Address>{restaurant?.address}</S.Address>
+              </ShimmerPlaceholder>
             </S.RestaurantDataContainer>
             <S.DishList
               refreshControl={
                 <RefreshControl
                   progressBackgroundColor={gray5}
-                  refreshing={loading}
+                  refreshing={false}
                   onRefresh={loadRestaurant}
                   tintColor={primary}
                   colors={[primary]}
                 />
               }
-              data={restaurant.dishes}
+              data={
+                dishesLoading || restaurantLoading
+                  ? Array.from({ length: 5 })
+                  : restaurant?.dishes
+              }
               contentContainerStyle={{ padding: 24 }}
               keyExtractor={(_item, index) => String(index)}
               renderItem={({ item: dish, index }) => (
                 <S.DishCard
-                  isLastItem={index === restaurant.dishes.length - 1}
+                  isLastItem={index === (restaurant?.dishes?.length ?? 0) - 1}
                   dish={dish as models.Dish}
                   onPress={() => {
                     Platform.OS === 'android' && bag.hideBar();
                   }}
+                  loading={dishesLoading || restaurantLoading}
                 />
               )}
             />

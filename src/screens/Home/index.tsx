@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-
 import * as S from './styles';
 import { StatusBar } from 'expo-status-bar';
 import { useForm } from 'react-hook-form';
@@ -35,10 +34,6 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     reloadRestaurants();
-  }, []);
-
-  useEffect(() => {
-    reloadRestaurants();
   }, [search]);
 
   return (
@@ -66,11 +61,11 @@ const Home: React.FC = () => {
           </S.SearchContainer>
           <S.BottomSheetContainer>
             <S.RestaurantList
-              data={restaurants}
+              data={loading ? Array.from({ length: 6 }) : restaurants}
               refreshControl={
                 <RefreshControl
                   progressBackgroundColor={gray5}
-                  refreshing={loading}
+                  refreshing={false}
                   onRefresh={reloadRestaurants}
                   tintColor={primary}
                   colors={[primary]}
@@ -86,6 +81,7 @@ const Home: React.FC = () => {
                 <S.RestaurantCard
                   isLastItem={index === restaurants.length - 1}
                   restaurant={restaurant as models.Restaurant}
+                  loading={loading}
                 />
               )}
             />
