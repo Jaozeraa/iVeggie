@@ -89,9 +89,11 @@
     },
     "orderTrackCard": {
       "estimatedTime": "Tempo estimado:",
-      "minutes": "minutos",
       "preparingYourOrder": "Seu pedido está sendo preparado...",
-      "onTheWay": "Seu pedido está a caminho!"
+      "onTheWay": "Seu pedido está a caminho!",
+      "hour": "hora",
+      "and": "e",
+      "minute": "minuto"
     }
   },
   "messages": {
