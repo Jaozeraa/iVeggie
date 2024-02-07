@@ -10,7 +10,7 @@ const OrderTrackCard: React.FC<models.OrderTrackCardProps> = ({
     const date = new Date();
     date.setMinutes(date.getMinutes() + Math.ceil(Number(estimatedMinutes)));
     return date;
-  }, []);
+  }, [estimatedMinutes]);
 
   return (
     <S.Container>

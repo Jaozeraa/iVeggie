@@ -13,7 +13,7 @@ const Map: React.FC<models.MapProps> = ({ userLocation, restaurant }) => {
   const latitudeDelta = 0.0025;
   const longitudeDelta = latitudeDelta * mapAspectRatio;
   const {
-    colors: { gray2, primary },
+    colors: { primary, primaryLight },
   } = useTheme();
 
   if (!userLocation || !restaurant) {
@@ -51,7 +51,7 @@ const Map: React.FC<models.MapProps> = ({ userLocation, restaurant }) => {
         }}
         apikey={keysConfig.googleMapsApiKey}
         strokeWidth={5}
-        strokeColor={gray2}
+        strokeColor={primaryLight}
         precision="low"
       />
     </S.Container>
