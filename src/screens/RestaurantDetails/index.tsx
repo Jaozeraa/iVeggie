@@ -62,7 +62,12 @@ const RestaurantDetails: React.FC = () => {
       <StatusBar style="light" animated />
       <S.ContentContainer>
         <S.HeaderContainer>
-          <S.Header title={i18n.t('screens.restaurantDetails.headerTitle')} />
+          <S.Header
+            title={i18n.t('screens.restaurantDetails.headerTitle')}
+            onPress={() => {
+              bag.removeAllItems();
+            }}
+          />
         </S.HeaderContainer>
         <S.Content>
           <S.ActionsContainer>

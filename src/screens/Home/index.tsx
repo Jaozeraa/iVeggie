@@ -2,12 +2,11 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import * as S from './styles';
 import { StatusBar } from 'expo-status-bar';
-import { set, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { i18n } from '../../services/translator';
 import { useTheme } from 'styled-components';
 import { RefreshControl } from 'react-native';
 import RestaurantsApi from '../../repositories/restaurants';
-import { useBag } from '../../hooks/bag';
 
 const Home: React.FC = () => {
   const {
@@ -17,7 +16,6 @@ const Home: React.FC = () => {
   const [restaurants, setRestaurants] = useState<models.Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
   const timeoutRef = useRef<NodeJS.Timeout>();
-  const { removeAllItems } = useBag();
 
   const { search } = watch();
 
@@ -52,19 +50,15 @@ const Home: React.FC = () => {
       <S.ContentContainer>
         <S.HeaderContainer>
           <S.HeaderContent>
-            <S.Header
-              variant="home"
-              onPress={() => {
-                removeAllItems();
-              }}
-            />
+            <S.Header variant="home" />
           </S.HeaderContent>
           <S.Title>{i18n.t('screens.home.title')}</S.Title>
           <S.Description>{i18n.t('screens.home.description')}</S.Description>
         </S.HeaderContainer>
         <S.Content>
           <S.SearchContainer>
-            <S.SearchInput
+            <S.Input
+              variant="search"
               control={control}
               name="search"
               placeholder={i18n.t('screens.home.search')}

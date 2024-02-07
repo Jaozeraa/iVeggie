@@ -9,6 +9,7 @@ import React, {
 import BagBar from '../components/molecules/BagBar';
 import Bag from '../components/organisms/Bag';
 import * as Crypto from 'expo-crypto';
+import RestaurantsApi from '../repositories/restaurants';
 
 const BagContext = createContext<models.BagContextData>(
   {} as models.BagContextData,
@@ -17,6 +18,7 @@ const BagContext = createContext<models.BagContextData>(
 export const BagContextProvider: React.FC<models.DefaultComponentProps> = ({
   children,
 }) => {
+  const [restaurant, setRestaurant] = useState<models.Restaurant | null>(null);
   const [isBagVisible, setIsBagVisible] = useState(false);
   const [isBagBarVisible, setIsBagBarVisible] = useState(true);
   const [items, setItems] = useState<models.Dish[]>([]);
@@ -28,10 +30,11 @@ export const BagContextProvider: React.FC<models.DefaultComponentProps> = ({
   useEffect(() => {
     if (items.length === 0) {
       setIsBagVisible(false);
+      setRestaurant(null);
     }
   }, [items]);
 
-  const addItem = useCallback((dish: models.Dish) => {
+  const addItem = useCallback(async (dish: models.Dish) => {
     const bagDishId = Crypto.randomUUID();
     const bagDish = {
       ...dish,
@@ -39,6 +42,12 @@ export const BagContextProvider: React.FC<models.DefaultComponentProps> = ({
     };
 
     setItems(state => [...state, bagDish]);
+    if (!restaurant) {
+      const restaurant = await RestaurantsApi.getRestaurantDetails(
+        dish.restaurantId,
+      );
+      setRestaurant(restaurant);
+    }
   }, []);
 
   const removeItem = useCallback((bagDishId: string): void => {
@@ -47,6 +56,7 @@ export const BagContextProvider: React.FC<models.DefaultComponentProps> = ({
 
   const removeAllItems = useCallback(() => {
     setItems([]);
+    setRestaurant(null);
   }, []);
 
   const openModal = useCallback(() => {
@@ -71,6 +81,7 @@ export const BagContextProvider: React.FC<models.DefaultComponentProps> = ({
         value={{
           items,
           subtotal,
+          restaurant,
           addItem,
           removeItem,
           removeAllItems,
@@ -88,7 +99,7 @@ export const BagContextProvider: React.FC<models.DefaultComponentProps> = ({
           items={items}
           subtotal={subtotal}
           removeItem={removeItem}
-          removeAllItems={removeAllItems}
+          hideBar={hideBar}
           isVisible={isBagVisible}
           setIsVisible={setIsBagVisible}
         />

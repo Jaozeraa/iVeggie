@@ -9,6 +9,7 @@ const RestaurantCard: React.FC<models.RestaurantCardProps> = ({
   isLastItem = false,
   restaurant,
   containerStyle,
+  disabled,
 }) => {
   const navigation = useNavigation();
   const [isLiked, setIsLiked] = useState(restaurant.liked);
@@ -18,6 +19,7 @@ const RestaurantCard: React.FC<models.RestaurantCardProps> = ({
 
   return (
     <S.Container
+      disabled={disabled}
       style={containerStyle}
       isLastItem={isLastItem}
       onPress={() => {
@@ -34,12 +36,18 @@ const RestaurantCard: React.FC<models.RestaurantCardProps> = ({
       <S.InformationContainer>
         <S.TitleContainer>
           <S.Title>{restaurant.name}</S.Title>
-          <S.LikeContainer
-            hitSlop={16}
-            onPress={() => setIsLiked(state => !state)}
-          >
-            <S.LikeIcon size={14} name="heart" color={isLiked ? red : gray3} />
-          </S.LikeContainer>
+          {!disabled && (
+            <S.LikeContainer
+              hitSlop={16}
+              onPress={() => setIsLiked(state => !state)}
+            >
+              <S.LikeIcon
+                size={14}
+                name="heart"
+                color={isLiked ? red : gray3}
+              />
+            </S.LikeContainer>
+          )}
         </S.TitleContainer>
         <S.Address>{restaurant.address}</S.Address>
         <S.RatingContainer>

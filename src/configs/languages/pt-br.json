@@ -59,6 +59,9 @@
     "dishDetails": {
       "button": "Adicionar a sacola",
       "orderBump": "Peça também"
+    },
+    "orderTracking": {
+      "headerTitle": "Acompanhe seu pedido"
     }
   },
   "components": {
@@ -83,6 +86,12 @@
     "addressSelector": {
       "headerTitle": "Endereço de entrega",
       "title": "Usar localização atual"
+    },
+    "orderTrackCard": {
+      "estimatedTime": "Tempo estimado:",
+      "minutes": "minutos",
+      "preparingYourOrder": "Seu pedido está sendo preparado...",
+      "onTheWay": "Seu pedido está a caminho!"
     }
   },
   "messages": {
@@ -95,7 +104,8 @@
       "emailAlreadyExists": "E-mail já cadastrado",
       "userNotFound": "Usuário não encontrado",
       "expiredToken": "Código expirado!",
-      "invalidToken": "Código inválido!"
+      "invalidToken": "Código inválido!",
+      "locationPermissionError": "Precisamos da sua localização para continuar"
     },
     "success": {
       "checkout": "Pedido confirmado com sucesso!",

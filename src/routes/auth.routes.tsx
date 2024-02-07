@@ -5,6 +5,7 @@ import { useTheme } from 'styled-components';
 import Home from '../screens/Home';
 import RestaurantDetails from '../screens/RestaurantDetails';
 import DishDetails from '../screens/DishDetails';
+import OrderTracking from '../screens/OrderTracking';
 
 const Auth = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ const AuthRoutes: React.FC = () => {
           presentation: 'modal',
         }}
       />
+      <Auth.Screen name="OrderTracking" component={OrderTracking} />
     </Auth.Navigator>
   );
 };

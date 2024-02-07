@@ -1,4 +1,22 @@
 declare module models {
+  type OrderTrackCardProps = {
+    estimatedMinutes: number | null;
+  };
+
+  type MapProps = {
+    userLocation: UserLocation | null;
+    restaurant: Restaurant | null;
+  };
+
+  type UserLocation = {
+    latitude: number;
+    longitude: number;
+  };
+
+  type StepProgressProps = {
+    actualStep?: boolean;
+  };
+
   type ResetPasswordFormData = {
     pin: string;
     password: string;
@@ -77,7 +95,7 @@ declare module models {
     items: Dish[];
     subtotal: number;
     removeItem: (id: string) => void;
-    removeAllItems: () => void;
+    hideBar: () => void;
   };
 
   type BottomSheetProps = DefaultComponentProps & {
@@ -94,7 +112,8 @@ declare module models {
   type BagContextData = {
     items: Dish[];
     subtotal: number;
-    addItem: (dish: Dish) => void;
+    restaurant: Restaurant | null;
+    addItem: (dish: Dish) => Promise<void>;
     removeItem: (id: string) => void;
     removeAllItems: () => void;
     openModal: () => void;
@@ -109,6 +128,7 @@ declare module models {
     name: string;
     resume: string;
     description: string;
+    restaurantId: string;
     imageUrl: string;
     price: number;
     suggestedDishes: Dish[];
@@ -132,11 +152,14 @@ declare module models {
     rate: number;
     liked: boolean;
     dishes: Dish[];
+    latitude: number;
+    longitude: number;
   };
 
   type RestaurantCardProps = DefaultComponentProps & {
     restaurant: Restaurant;
     isLastItem?: boolean;
+    disabled?: boolean;
   };
 
   type RestaurantCardContainerProps = {
@@ -159,6 +182,7 @@ declare module models {
 
   type InputProps = DefaultComponentProps &
     import('react-native').TextInputProps & {
+      variant?: 'form' | 'search';
       disabled?: boolean;
       control: import('react-hook-form').Control<any, any, any>;
       error?: string;

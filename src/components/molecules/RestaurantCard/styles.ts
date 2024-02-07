@@ -9,11 +9,13 @@ export const Container = styled.TouchableOpacity<models.RestaurantCardContainerP
   border-bottom-color: ${props => props.theme.colors.gray4};
   flex-direction: row;
   margin-bottom: ${props => (props.isLastItem ? '0' : '16px')};
+  align-items: center;
 
   ${props =>
     props.isLastItem &&
     css`
       border-bottom-width: 0;
+      padding-bottom: 0px;
     `}
 `;
 

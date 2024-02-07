@@ -28,8 +28,8 @@ const Header: React.FC<models.HeaderProps> = ({
           </S.TitleContainer>
           <S.BackButton
             onPress={() => {
-              if (onPress) return onPress();
               navigateBack(navigation);
+              if (onPress) return onPress();
             }}
           >
             <S.BackIcon name={'arrow-left'} size={24} color={color || gray5} />

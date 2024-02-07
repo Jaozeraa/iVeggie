@@ -1,10 +1,11 @@
 import styled from 'styled-components/native';
 import BrandWallpaperVector from '../../components/atoms/BrandWallpaperVector';
-import Input from '../../components/atoms/Input';
-import Logo from '../../components/atoms/Logo';
-import { FlatList } from 'react-native';
-import RestaurantCard from '../../components/molecules/RestaurantCard';
 import Header from '../../components/molecules/Header';
+import OrderTrackCard from '../../components/molecules/OrderTrackCard';
+import Map from '../../components/atoms/Map';
+import RestaurantCard from '../../components/molecules/RestaurantCard';
+import { RectButton } from 'react-native-gesture-handler';
+import Feather from '@expo/vector-icons/Feather';
 
 export const Container = styled.View`
   flex: 1;
@@ -46,26 +47,12 @@ export const HeaderContent = styled.View`
   width: 100%;
 `;
 
-export const Title = styled.Text`
-  font-size: 32px;
-  color: ${props => props.theme.colors.gray5};
-  font-family: ${props => props.theme.fonts.tolyerMedium};
-  margin-bottom: 8px;
-`;
-
-export const Description = styled.Text`
-  font-size: 16px;
-  color: ${props => props.theme.colors.gray4};
-  font-family: ${props => props.theme.fonts.interRegular};
-  margin-bottom: 24px;
-`;
-
 export const Content = styled.View`
-  height: 80%;
+  height: 92.5%;
   position: relative;
 `;
 
-export const SearchContainer = styled.View`
+export const OrderTrackingContainer = styled.View`
   position: absolute;
   width: 100%;
   padding-horizontal: 24px;
@@ -75,16 +62,35 @@ export const SearchContainer = styled.View`
 
 export const BottomSheetContainer = styled.View`
   flex: 1;
-  margin-top: 28px;
-  background-color: ${props => props.theme.colors.gray5};
+  margin-top: 72px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  overflow: hidden;
 `;
 
-export const RestaurantList = styled(FlatList)``;
-
-export const RefreshContainer = styled.View`
-  margin-top: 56px;
+export const Footer = styled.View`
+  padding: 16px 24px 40px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: ${props => props.theme.colors.gray5};
+  border-top-width: 1px;
+  border-color: ${props => props.theme.colors.gray4};
 `;
 
-export { BrandWallpaperVector, Input, Logo, RestaurantCard, Header };
+export const RestaurantCardContainer = styled.View`
+  flex: 1;
+`;
+
+export const ActionButton = styled(RectButton)`
+  width: 48px;
+  height: 48px;
+  background-color: ${props => props.theme.colors.gray4};
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+`;
+
+export const ActionIcon = styled(Feather)``;
+
+export { BrandWallpaperVector, Header, OrderTrackCard, RestaurantCard, Map };

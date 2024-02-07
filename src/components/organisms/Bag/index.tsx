@@ -5,15 +5,18 @@ import { i18n } from '../../../services/translator';
 import { formatCurrency } from '../../../utils/formatCurrency';
 import { useTheme } from 'styled-components';
 import { useToast } from '../../../hooks/toast';
+import { useNavigation } from '@react-navigation/native';
+import { navigateTo } from '../../../services/navigation';
 
 const Bag: React.FC<models.BagProps> = ({
   isVisible,
   setIsVisible,
   removeItem,
-  removeAllItems,
+  hideBar,
   items,
   subtotal,
 }) => {
+  const navigation = useNavigation();
   const toast = useToast();
   const {
     colors: { gray1, red },
@@ -26,11 +29,13 @@ const Bag: React.FC<models.BagProps> = ({
   }, []);
 
   const handleCheckout = useCallback(() => {
-    removeAllItems();
+    hideBar();
+    setIsVisible(false);
     toast.addToast({
       type: 'success',
       message: 'checkout',
     });
+    navigateTo(navigation, 'OrderTracking');
   }, []);
 
   return (

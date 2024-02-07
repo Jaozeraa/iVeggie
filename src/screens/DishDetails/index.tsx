@@ -20,6 +20,7 @@ const DishDetails: React.FC = () => {
   const bag = useBag();
   const { id } = route.params as { id: string };
   const [dish, setDish] = useState<models.Dish | null>(null);
+  const [buttonLoading, setButtonLoading] = useState(false);
   const [suggestedDishes, setSuggestedDishes] = useState<models.Dish[]>([]);
 
   useEffect(() => {
@@ -31,10 +32,12 @@ const DishDetails: React.FC = () => {
     })();
   }, [id]);
 
-  const handleAddToBag = useCallback((dish: models.Dish) => {
-    bag.addItem(dish);
+  const handleAddToBag = useCallback(async (dish: models.Dish) => {
+    setButtonLoading(true);
+    await bag.addItem(dish);
     navigateBack(navigation);
     bag.showBar();
+    setButtonLoading(false);
   }, []);
 
   if (!dish) {
@@ -99,7 +102,10 @@ const DishDetails: React.FC = () => {
               )}
             />
             <S.Footer>
-              <S.Button onPress={() => handleAddToBag(dish)}>
+              <S.Button
+                loading={buttonLoading}
+                onPress={() => handleAddToBag(dish)}
+              >
                 {formatCurrency(dish.price)} -{' '}
                 {i18n.t('screens.dishDetails.button')}
               </S.Button>
