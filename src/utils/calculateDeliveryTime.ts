@@ -7,5 +7,5 @@ export const calculateDeliveryTime = (distance: number): number => {
 
   const timeInMinutes = timeInHours * 60;
 
-  return timeInMinutes;
+  return Math.ceil(timeInMinutes);
 };
