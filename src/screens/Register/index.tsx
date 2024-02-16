@@ -17,6 +17,8 @@ import {
 import UsersApi from '../../repositories/users';
 import { useToast } from '../../hooks/toast';
 import { AxiosError } from 'axios';
+import { navigateBack } from '../../services/navigation';
+import { useNavigation } from '@react-navigation/native';
 
 const schema = z.object({
   name: nameValidation,
@@ -25,6 +27,7 @@ const schema = z.object({
 });
 
 const Register: React.FC = () => {
+  const navigation = useNavigation();
   const [buttonLoading, setButtonLoading] = useState(false);
   const { addToast } = useToast();
   const {
@@ -50,6 +53,7 @@ const Register: React.FC = () => {
         type: 'success',
         message: 'register',
       });
+      navigateBack(navigation);
     } catch (error) {
       if (error instanceof AxiosError) {
         return addToast({
